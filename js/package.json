@@ -1,0 +1,25 @@
+{
+  "name": "electric-shield-configurator",
+  "version": "2.0.0",
+  "description": "Конфигуратор щитового оборудования с авторизацией, ролями и заявками",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "mysql2": "^3.16.0",
+    "cors": "^2.8.5",
+    "bcrypt": "^5.1.1",
+    "express-session": "^1.18.1",
+    "express-mysql-session": "^3.0.3",
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "keywords": ["электрощит", "конфигуратор", "база данных", "авторизация", "заявки"],
+  "author": "Лобанов Ю.В.",
+  "license": "ISC"
+}

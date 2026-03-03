@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Конфигуратор щитового оборудования - АО "Электрощит-Самара"</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="logo-text">
+              <h1>Электрощит-Самара</h1>
+              <p>Конфигуратор щитового оборудования</p>
+            </div>
+          </div>
+
+          <ul class="nav-menu">
+            <li>
+              <a href="#configurator" class="nav-link active"
+                ><i class="fas fa-cogs"></i> Конфигуратор</a
+              >
+            </li>
+            <li>
+              <a href="#catalog" class="nav-link"
+                ><i class="fas fa-list"></i> Каталог</a
+              >
+            </li>
+            <li>
+              <a href="/orders.html" class="nav-link"
+                ><i class="fas fa-box"></i> Мои заказы</a
+              >
+            </li>
+
+            <li>
+              <div class="theme-switch-wrapper">
+                <label class="theme-switch">
+                  <input type="checkbox" id="theme-toggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </li>
+
+            <li>
+              <div id="authSection">
+                <div class="auth-buttons">
+                  <button class="btn-auth-login" onclick="showLoginModal()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Войти</span>
+                  </button>
+                  <button
+                    class="btn-auth-register"
+                    onclick="showRegisterModal()"
+                  >
+                    <i class="fas fa-user-plus"></i>
+                    <span>Регистрация</span>
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="configurator" class="section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-cogs" style="color: var(--primary-color)"></i>
+            Конфигуратор оборудования
+          </h2>
+          <p>Выберите компоненты и создайте свою конфигурацию щита</p>
+        </div>
+
+        <div class="configurator-grid">
+          <div class="configurator-panel">
+            <h3><i class="fas fa-folder"></i> Категории</h3>
+            <div class="categories-list" id="categoriesList">
+              <div class="empty-message">Загрузка категорий...</div>
+            </div>
+          </div>
+
+          <div class="configurator-panel">
+            <h3><i class="fas fa-microchip"></i> Компоненты</h3>
+
+            <div class="search-box">
+              <input
+                type="text"
+                id="searchComponents"
+                class="search-input"
+                placeholder="Поиск компонентов..."
+              />
+              <i class="fas fa-search search-icon"></i>
+            </div>
+
+            <div class="components-list" id="componentsList">
+              <div class="empty-message">Выберите категорию</div>
+            </div>
+          </div>
+
+          <div class="configurator-panel">
+            <h3><i class="fas fa-shopping-cart"></i> Ваша конфигурация</h3>
+
+            <div class="selected-list" id="selectedComponents">
+              <div class="empty-message">Нет выбранных компонентов</div>
+            </div>
+
+            <div class="services-section">
+              <h4><i class="fas fa-tools"></i> Дополнительные услуги</h4>
+              <div class="services-list" id="servicesList">
+                <div class="empty-message">Загрузка услуг...</div>
+              </div>
+            </div>
+
+            <div class="total-section">
+              <h4>ИТОГОВАЯ СТОИМОСТЬ:</h4>
+              <div class="total-price" id="totalPrice">0 ₽</div>
+
+              <button
+                class="btn-primary"
+                id="saveConfigBtn"
+                onclick="showOrderForm()"
+                disabled
+              >
+                <i class="fas fa-shopping-cart"></i> Оформить заказ
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="customer-form"
+          id="customerFormSection"
+          style="display: none"
+        >
+          <h3><i class="fas fa-file-alt"></i> Оформление заказа</h3>
+          <form id="orderForm" onsubmit="submitOrder(event)">
+            <div class="form-group">
+              <label><i class="fas fa-user"></i> Ваше имя *</label>
+              <input type="text" id="customerName" required />
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-envelope"></i> Email</label>
+              <input type="email" id="customerEmail" />
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-phone"></i> Телефон</label>
+              <input
+                type="tel"
+                id="customerPhone"
+                placeholder="+7 (999) 123-45-67"
+              />
+            </div>
+
+            <div class="form-group">
+              <label
+                ><i class="fas fa-map-marker-alt"></i> Адрес (для
+                доставки)</label
+              >
+              <input
+                type="text"
+                id="customerAddress"
+                placeholder="г. Самара, ул. Ленина, д. 1"
+              />
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-truck"></i> Способ доставки</label>
+              <select id="deliveryMethod" onchange="toggleDeliveryAddress()">
+                <option value="pickup">Самовывоз (со склада)</option>
+                <option value="delivery">Доставка курьером</option>
+              </select>
+            </div>
+
+            <div
+              class="form-group"
+              id="deliveryAddressGroup"
+              style="display: none"
+            >
+              <label><i class="fas fa-map-pin"></i> Адрес доставки</label>
+              <input
+                type="text"
+                id="deliveryAddress"
+                placeholder="Укажите адрес доставки"
+              />
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-credit-card"></i> Способ оплаты</label>
+              <select id="paymentMethod">
+                <option value="cash">Наличными при получении</option>
+                <option value="card">Банковской картой</option>
+                <option value="invoice">По счету (для юр. лиц)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> Название конфигурации</label>
+              <input type="text" id="configName" value="Моя конфигурация" />
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-comment"></i> Комментарий к заказу</label>
+              <textarea
+                id="comments"
+                rows="3"
+                placeholder="Дополнительные пожелания..."
+              ></textarea>
+            </div>
+
+            <div class="total-summary">
+              <div class="summary-row">
+                <span>Компоненты:</span>
+                <span id="summaryComponents">0 ₽</span>
+              </div>
+              <div class="summary-row">
+                <span>Услуги:</span>
+                <span id="summaryServices">0 ₽</span>
+              </div>
+              <div class="summary-row total">
+                <span>Итого к оплате:</span>
+                <span id="summaryTotal">0 ₽</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-check-circle"></i> Подтвердить заказ
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section id="catalog" class="section">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-list" style="color: var(--primary-color)"></i>
+            Каталог оборудования
+          </h2>
+          <p>Полный перечень доступного оборудования</p>
+        </div>
+
+        <div class="catalog-controls">
+          <div class="search-box" style="flex: 1">
+            <input
+              type="text"
+              id="catalogSearch"
+              class="search-input"
+              placeholder="Поиск по каталогу..."
+            />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+          <select id="catalogCategory" class="category-select">
+            <option value="">Все категории</option>
+          </select>
+        </div>
+
+        <div class="catalog-grid" id="catalogGrid">
+          <div class="empty-message">Загрузка каталога...</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Модальное окно входа/регистрации -->
+    <div class="modal" id="authModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>
+            <i class="fas fa-user-lock"></i> <span id="modalTitle">Вход</span>
+          </h2>
+          <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+
+        <div id="loginForm">
+          <div class="form-group">
+            <label>Имя пользователя</label>
+            <input
+              type="text"
+              id="loginUsername"
+              placeholder="Логин"
+            />
+          </div>
+          <div class="form-group">
+            <label>Пароль</label>
+            <input type="password" id="loginPassword" placeholder="Пароль" />
+          </div>
+
+          <button onclick="login()" class="btn-login-submit">
+            <span>Войти</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+
+          <button onclick="showRegisterForm()" class="btn-form-switch">
+            <i class="fas fa-user-plus"></i>
+            <span>Зарегистрироваться</span>
+          </button>
+
+          <div id="loginError" class="error-message"></div>
+        </div>
+
+        <div id="registerForm" style="display: none">
+          <div class="form-group">
+            <label>Имя пользователя *</label>
+            <input type="text" id="regUsername" placeholder="Введите логин" />
+          </div>
+          <div class="form-group">
+            <label>Пароль *</label>
+            <input
+              type="password"
+              id="regPassword"
+              placeholder="Минимум 6 символов"
+            />
+          </div>
+          <div class="form-group">
+            <label>Подтверждение пароля *</label>
+            <input
+              type="password"
+              id="regPassword2"
+              placeholder="Повторите пароль"
+            />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="regEmail" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label>ФИО *</label>
+            <input
+              type="text"
+              id="regFullName"
+              placeholder="Иванов Иван Иванович"
+            />
+          </div>
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" id="regPhone" placeholder="+7 (999) 123-45-67" />
+          </div>
+
+          <button onclick="register()" class="btn-register-submit">
+            <span>Зарегистрироваться</span>
+            <i class="fas fa-check"></i>
+          </button>
+
+          <button onclick="showLoginForm()" class="btn-back-to-login">
+            <i class="fas fa-arrow-left"></i>
+            <span>Назад ко входу</span>
+          </button>
+
+          <div id="registerError" class="error-message"></div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="orderSuccessNotification"
+      class="order-success-notification"
+      style="display: none"
+    >
+      <h3>
+        <i class="fas fa-check-circle"></i>
+        Заказ успешно создан!
+      </h3>
+      <p id="orderSuccessMessage">Ваш заказ №ORD-12345 успешно оформлен.</p>
+      <div class="order-success-actions">
+        <button class="btn-yes" onclick="goToMyOrders()">
+          <i class="fas fa-box"></i> Посмотреть заказы
+        </button>
+        <button class="btn-no" onclick="closeSuccessNotification()">
+          <i class="fas fa-times"></i> Закрыть
+        </button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-container">
+          <div class="footer-section">
+            <h3><i class="fas fa-bolt"></i> Электрощит-Самара</h3>
+            <p>Профессиональный конфигуратор щитового оборудования</p>
+          </div>
+          <div class="footer-section">
+            <h3><i class="fas fa-link"></i> Быстрые ссылки</h3>
+            <p><a href="#configurator">Конфигуратор</a></p>
+            <p><a href="#catalog">Каталог</a></p>
+            <p><a href="/orders.html">Мои заказы</a></p>
+          </div>
+          <div class="footer-section">
+            <h3><i class="fas fa-address-book"></i> Контакты</h3>
+            <p><i class="fas fa-phone"></i> +7 (846) 123-45-67</p>
+            <p><i class="fas fa-envelope"></i> info@electroshield.ru</p>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>© 2026 АО "Электрощит-Самара". Все права защищены.</p>
+        </div>
+      </div>
+    </footer>
+    <script src="js/index.js"></script>
+  </body>
+</html>

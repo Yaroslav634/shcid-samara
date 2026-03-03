@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мои заказы</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="logo-text">
+              <h1>Электрощит-Самара</h1>
+              <p>Мои заказы</p>
+            </div>
+          </div>
+
+          <ul class="nav-menu">
+            <li>
+              <a href="/" class="nav-link"
+                ><i class="fas fa-home"></i> Главная</a
+              >
+            </li>
+            <li>
+              <a href="/#configurator" class="nav-link"
+                ><i class="fas fa-cogs"></i> Конфигуратор</a
+              >
+            </li>
+            <li>
+              <a href="/orders.html" class="nav-link active"
+                ><i class="fas fa-box"></i> Мои заказы</a
+              >
+            </li>
+            <li>
+              <div id="authSection">
+                <button class="btn-login" onclick="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Выйти
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-box"></i> Мои заказы</h2>
+          <p>История и статусы ваших заказов</p>
+        </div>
+
+        <div class="filter-tabs" id="filterTabs">
+          <div class="filter-tab active" onclick="filterOrders('all')">Все</div>
+          <div class="filter-tab" onclick="filterOrders('new')">Новые</div>
+          <div class="filter-tab" onclick="filterOrders('processing')">
+            В обработке
+          </div>
+          <div class="filter-tab" onclick="filterOrders('completed')">
+            Выполненные
+          </div>
+        </div>
+
+        <div id="ordersList" class="requests-grid">
+          <div class="empty-message">Загрузка...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="orderModal">
+      <div class="modal-content" style="max-width: 1000px">
+        <div class="modal-header">
+          <h2>
+            <i class="fas fa-file-invoice"></i>
+            <span id="modalOrderNumber"></span>
+          </h2>
+          <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        <div id="orderDetails"></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-container">
+          <div class="footer-section">
+            <h3><i class="fas fa-bolt"></i> Электрощит-Самара</h3>
+            <p>Профессиональный конфигуратор</p>
+          </div>
+          <div class="footer-section">
+            <h3><i class="fas fa-link"></i> Ссылки</h3>
+            <p><a href="/">Главная</a></p>
+            <p><a href="/#configurator">Конфигуратор</a></p>
+          </div>
+          <div class="footer-section">
+            <h3><i class="fas fa-address-book"></i> Контакты</h3>
+            <p><i class="fas fa-phone"></i> +7 (846) 123-45-67</p>
+            <p><i class="fas fa-envelope"></i> info@electroshield.ru</p>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>© 2026 АО "Электрощит-Самара"</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/orders.js"></script>
+  </body>
+</html>
